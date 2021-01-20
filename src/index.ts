@@ -6,8 +6,6 @@ import cors from 'cors';
 import * as path from 'path';
 
 // eslint-disable-next-line import/extensions
-import { ConditionResolver } from './Condition/condition-resolver';
-import { ModifierResolver } from './Modifier/modifier-resolver';
 import { ChallengeResolver } from './Challenge/challenge-resolver';
 
 
@@ -17,8 +15,6 @@ const main = async () => {
   const schema = await buildSchema({
     resolvers: [   
       ChallengeResolver,
-      ModifierResolver,
-      ConditionResolver,
     ],
     emitSchemaFile: path.resolve(__dirname, 'schema.gql'),  
   });

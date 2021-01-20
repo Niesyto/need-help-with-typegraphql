@@ -3,64 +3,19 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
-"""Challenge type"""
 type Challenge {
-  description: String!
   id: String!
-  name: String!
-  resetCondition: ConditionOutput
-  rewards: [ItemReward!]
   successCondition: ConditionOutput!
-  unlockCondition: ConditionOutput
-}
-
-input ChallengeFilter {
-  id: String
-}
-
-"""Condition type"""
-type Condition {
-  description: String!
-  id: String!
-  type: String!
-}
-
-input ConditionFilter {
-  id: String
-  ids: [String!]
-  q: String
-  type: String
 }
 
 input ConditionInput {
   conditions: [ConditionInput!]
-  id: String!
-  modifiers: [ModifierInput!]
-  parameter: itemID
   type: String!
 }
 
 type ConditionOutput {
   conditions: [ConditionOutput!]
-  id: String!
-  modifiers: [ModifierOutput!]
-  parameter: itemID
   type: String!
-}
-
-"""Custom ID scalar"""
-scalar itemID
-
-type ItemReward {
-  amount: Float
-  currency: String
-  id: itemID
-}
-
-input ItemRewardInput {
-  amount: Float
-  currency: String
-  id: itemID
 }
 
 """Meta required for react-admin dataprovider"""
@@ -68,62 +23,16 @@ type Metadata {
   count: Int!
 }
 
-"""Modifier type"""
-type Modifier {
-  description: String!
-  id: String!
-}
-
-input ModifierFilter {
-  id: String
-  ids: [String!]
-  q: String
-  type: String
-}
-
-input ModifierInput {
-  description: String!
-  hasParameter: Boolean!
-  value: itemID
-}
-
-type ModifierOutput {
-  description: String!
-  hasParameter: Boolean!
-  value: itemID
-}
-
 type Mutation {
-  createChallenge(description: String!, name: String!, resetCondition: ConditionInput, rewards: [ItemRewardInput!], successCondition: ConditionInput, unlockCondition: ConditionInput): Challenge!
-  deleteChallenge(id: itemID!): Challenge!
-  updateChallenge(description: String!, id: String!, name: String!, resetCondition: ConditionInput, rewards: [ItemRewardInput!], successCondition: ConditionInput, unlockCondition: ConditionInput): Challenge!
+  createChallenge(successCondition: ConditionInput): Challenge!
+  deleteChallenge(id: String!): Challenge!
+  updateChallenge(id: String!, successCondition: ConditionInput): Challenge!
 }
 
 type Query {
-  """Get challenges metadata"""
-  _allChallengesMeta(filter: ChallengeFilter, page: Float, perPage: Float, sortField: String, sortOrder: String): Metadata!
-
-  """Get conditiones metadata"""
-  _allConditionsMeta(filter: ConditionFilter, page: Float, perPage: Float, sortField: String, sortOrder: String): Metadata!
-
-  """Get modifieres metadata"""
-  _allModifiersMeta(filter: ModifierFilter, page: Float, perPage: Float, sortField: String, sortOrder: String): Metadata!
-
-  """Get list of challenges"""
-  allChallenges(filter: ChallengeFilter, page: Float, perPage: Float, sortField: String, sortOrder: String): [Challenge!]!
-
-  """Get list of conditiones"""
-  allConditions(filter: ConditionFilter, page: Float, perPage: Float, sortField: String, sortOrder: String): [Condition!]!
-
-  """Get list of modifieres"""
-  allModifiers(filter: ModifierFilter, page: Float, perPage: Float, sortField: String, sortOrder: String): [Modifier!]!
+  _allChallengesMeta: Metadata!
+  allChallenges: [Challenge!]!
 
   """Get one challenge """
-  Challenge(id: itemID!): Challenge!
-
-  """Get one condition """
-  Condition(id: String!): Condition!
-
-  """Get one modifier """
-  Modifier(id: String!): Modifier!
+  Challenge(id: String!): Challenge!
 }
